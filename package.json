@@ -1,0 +1,19 @@
+{
+	"name": "@tunnel/mkcert",
+	"type": "module",
+	"exports": "./src/index.ts",
+	"scripts": {
+		"build": "ts-node ./scripts/build.ts"
+	},
+	"dependencies": {
+		"execa": "7.2.0",
+		"lion-utils": "0.2.2",
+		"onetime": "6.0.0",
+		"pathe": "1.1.1"
+	},
+	"devDependencies": {
+		"@types/node": "20.5.1",
+		"lionconfig": "3.0.1",
+		"typescript": "5.1.6"
+	}
+}
