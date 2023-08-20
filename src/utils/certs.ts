@@ -16,7 +16,7 @@ export const mkcertCertsDirpath = path.join(
 );
 
 export const getMkcertCertsPaths = pMemoize(
-  async ({ mkcertBin }: { mkcertBin: string }) => {
+  async ({ mkcertBin }: { mkcertBin: string } = { mkcertBin: "mkcert" }) => {
     // Needs to be a dynamic import in order to be a "publishable" package
     const { stdout: caRootDirpath } = await execa(mkcertBin, ["-CAROOT"]);
 
@@ -26,15 +26,19 @@ export const getMkcertCertsPaths = pMemoize(
       certFilePath: path.join(mkcertCertsDirpath, "test-cert.pem"),
     };
   },
-  { cacheKey: (args) => args[0].mkcertBin }
+  { cacheKey: (args) => args[0]?.mkcertBin ?? "mkcert" }
 );
 
-export const getMkcertCerts = onetime(async () => {
-  const { caFilePath, keyFilePath, certFilePath } = await getMkcertCertsPaths();
-  const [ca, key, cert] = await Promise.all([
-    fs.promises.readFile(caFilePath, "utf8"),
-    fs.promises.readFile(keyFilePath, "utf8"),
-    fs.promises.readFile(certFilePath, "utf8"),
-  ]);
-  return { ca, key, cert };
-});
+export const getMkcertCerts = onetime(
+  async ({ mkcertBin }: { mkcertBin: string } = { mkcertBin: "mkcert" }) => {
+    const { caFilePath, keyFilePath, certFilePath } = await getMkcertCertsPaths(
+      { mkcertBin }
+    );
+    const [ca, key, cert] = await Promise.all([
+      fs.promises.readFile(caFilePath, "utf8"),
+      fs.promises.readFile(keyFilePath, "utf8"),
+      fs.promises.readFile(certFilePath, "utf8"),
+    ]);
+    return { ca, key, cert };
+  }
+);
