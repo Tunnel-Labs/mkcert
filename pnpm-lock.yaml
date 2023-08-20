@@ -6,27 +6,30 @@ settings:
 
 dependencies:
   execa:
-    specifier: 7.2.0
+    specifier: ^7.2.0
     version: 7.2.0
   lion-utils:
-    specifier: 0.2.2
+    specifier: ^0.2.2
     version: 0.2.2
   onetime:
-    specifier: 6.0.0
+    specifier: ^6.0.0
     version: 6.0.0
+  p-memoize:
+    specifier: ^7.1.1
+    version: 7.1.1
   pathe:
-    specifier: 1.1.1
+    specifier: ^1.1.1
     version: 1.1.1
 
 devDependencies:
   '@types/node':
-    specifier: 20.5.1
+    specifier: ^20.5.1
     version: 20.5.1
   lionconfig:
-    specifier: 3.0.1
+    specifier: ^3.0.1
     version: 3.0.1(typescript@5.1.6)
   typescript:
-    specifier: 5.1.6
+    specifier: ^5.1.6
     version: 5.1.6
 
 packages:
@@ -5551,7 +5554,6 @@ packages:
     dependencies:
       mimic-fn: 4.0.0
       type-fest: 3.13.1
-    dev: true
 
   /p-timeout@3.2.0:
     resolution: {integrity: sha512-rhIwUycgwwKcP9yTOOFK/AKsAopjjCakVqLHePO3CC6Mir1Z99xT+R63jZxAT5lFZLa2inS5h+ZS2GvR99/FBg==}

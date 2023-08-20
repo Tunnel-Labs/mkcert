@@ -1,11 +1,10 @@
 import fs from "node:fs";
 
-import { monorepoDirpath } from "@t/packages-config";
 import onetime from "onetime";
 import path from "pathe";
 import pMemoize from "p-memoize";
 import { getProjectDirpath } from "lion-utils";
-import { execa } from 'execa'
+import { execa } from "execa";
 
 const monorepoDirpath = getProjectDirpath(process.cwd(), {
   monorepoRoot: true,
@@ -19,14 +18,15 @@ export const mkcertCertsDirpath = path.join(
 export const getMkcertCertsPaths = pMemoize(
   async ({ mkcertBin }: { mkcertBin: string }) => {
     // Needs to be a dynamic import in order to be a "publishable" package
-    const { stdout: caRootDirpath } = await execa(mkcertBin, "-CAROOT");
+    const { stdout: caRootDirpath } = await execa(mkcertBin, ["-CAROOT"]);
 
     return {
       caFilePath: path.join(caRootDirpath, "rootCA.pem"),
       keyFilePath: path.join(mkcertCertsDirpath, "test-key.pem"),
       certFilePath: path.join(mkcertCertsDirpath, "test-cert.pem"),
     };
-  }
+  },
+  { cacheKey: (args) => args[0].mkcertBin }
 );
 
 export const getMkcertCerts = onetime(async () => {
